@@ -200,7 +200,7 @@ export default function App() {
     });
     const text = await res.text(); let data; try { data = JSON.parse(text); } catch(e) { throw new Error("API returned: " + text.slice(0, 100)); }
     const raw = data.content?.find(b => b.type === "text")?.text || "";
-    if (!raw) throw new Error("Empty AI response"); return JSON.parse(raw.replace(/```json|```/g, "").trim());
+    if (!raw) throw new Error("Full response: " + JSON.stringify(data)); return JSON.parse(raw.replace(/```json|```/g, "").trim());
   }
 
   async function analyse() {
