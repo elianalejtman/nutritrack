@@ -196,7 +196,7 @@ export default function App() {
     const res = await fetch("/api/analyse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 400, messages: [{ role: "user", content }] }),
+      body: JSON.stringify({ model: "claude-sonnet-4-5", max_tokens: 400, messages: [{ role: "user", content }] }),
     });
     const text = await res.text(); let data; try { data = JSON.parse(text); } catch(e) { throw new Error("API returned: " + text.slice(0, 100)); }
     const raw = data.content?.find(b => b.type === "text")?.text || "";
