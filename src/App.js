@@ -173,13 +173,13 @@ export default function App() {
       if (g) { const p = JSON.parse(g); setGoals(p); setGoalDraft(p); }
       if (h) { const ph = JSON.parse(h); setHistory(ph); setMeals(ph[today] || []); }
     } catch {}
-  }, []);
+  }, [today]);
 
   useEffect(() => {
     const nh = { ...history, [today]: meals };
     setHistory(nh);
     localStorage.setItem("ct_history", JSON.stringify(nh));
-  }, [meals]);
+  }, [meals, history, today]);
 
   useEffect(() => { localStorage.setItem("ct_goals", JSON.stringify(goals)); }, [goals]);
 
