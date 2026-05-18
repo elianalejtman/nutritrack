@@ -23,7 +23,7 @@ const C = {
 
 const DEFAULT_GOALS = { calories: 2000, protein: 150, carbs: 200, fat: 65 };
 
-function toBase64(file) {
+function toBase64(file) { return compressAndEncode(file); } async function compressAndEncode(file) {
   return new Promise((res, rej) => {
     const r = new FileReader();
     r.onload = () => res(r.result.split(",")[1]);
