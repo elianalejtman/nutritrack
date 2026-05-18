@@ -193,7 +193,7 @@ export default function App() {
   const JSON_RULES = `All macro values are integers in grams. calories is an integer in kcal. Return ONLY valid JSON (no markdown, no backticks).`;
 
   async function callAI(content) {
-    const res = await fetch("/api/analyse", {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 400, messages: [{ role: "user", content }] }),
