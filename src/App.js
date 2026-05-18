@@ -172,7 +172,7 @@ export default function App() {
       const h = localStorage.getItem("ct_history");
       if (g) { const p = JSON.parse(g); setGoals(p); setGoalDraft(p); }
       if (h) { const ph = JSON.parse(h); setHistory(ph); setMeals(ph[today] || []); }
-    } catch {}
+    } catch(err) {}
   }, [today]);
 
   useEffect(() => {
@@ -213,8 +213,8 @@ export default function App() {
         { type: "text", text: `You are a nutrition expert. Analyse the food in this image${note ? ` (additional context: "${note}")` : ""}.\n\nReturn ONLY valid JSON in this exact shape:\n${JSON_SHAPE}\n\n${JSON_RULES}` },
       ]);
       setAiResult(parsed); setEditResult({ ...parsed });
-    } catch {
-      setAiError("Analysis failed. Please try again or fill in values manually.");
+    } catch(err) {
+      setAiError("Error: " + err.message);
       setEditResult({ name: "", calories: 0, protein: 0, carbs: 0, fat: 0, note: "" });
     } finally { setAnalysing(false); }
   }
@@ -227,8 +227,8 @@ export default function App() {
         { type: "text", text: `You are a nutrition expert. Estimate the nutritional content of this meal based on the description:\n\n"${note}"\n\nBe realistic about typical portion sizes if not specified. Return ONLY valid JSON in this exact shape:\n${JSON_SHAPE}\n\n${JSON_RULES}` },
       ]);
       setAiResult(parsed); setEditResult({ ...parsed });
-    } catch {
-      setAiError("Analysis failed. Please try again or fill in values manually.");
+    } catch(err) {
+      setAiError("Error: " + err.message);
       setEditResult({ name: "", calories: 0, protein: 0, carbs: 0, fat: 0, note: "" });
     } finally { setAnalysing(false); }
   }
@@ -246,7 +246,7 @@ export default function App() {
         : [{ type: "text", text: `You are a nutrition expert. You previously estimated this meal as:\n${prevSummary}\nOriginal description: "${note}"\n\nThe user's correction: "${refineFeedback}"\n\nRe-estimate taking this into account. Return ONLY valid JSON:\n${JSON_SHAPE}\n\n${JSON_RULES}` }];
       const parsed = await callAI(content);
       setAiResult(parsed); setEditResult({ ...parsed }); setRefineFeedback("");
-    } catch {
+    } catch(err) {
       setAiError("Re-analysis failed. You can still edit the values manually.");
     } finally { setRefining(false); }
   }
